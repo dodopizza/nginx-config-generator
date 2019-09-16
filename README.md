@@ -1,1 +1,1 @@
-# nginx-config-generator
+## nginx-config-generator
