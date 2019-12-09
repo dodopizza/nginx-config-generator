@@ -6,16 +6,19 @@
 
 import jinja2, yaml, sys
 
-data = yaml.load(open('./data.yml'))
+data = yaml.load(open('./data.yml'), Loader=yaml.FullLoader)
 loader = jinja2.FileSystemLoader('./')
-env = jinja2.Environment( loader=loader, autoescape=False, trim_blocks=False, lstrip_blocks=False, extensions=['jinja2.ext.do'] )
+env = jinja2.Environment(
+    loader=loader, autoescape=False, trim_blocks=False, lstrip_blocks=False, extensions=['jinja2.ext.do'])
 
 ## User functions
 
-def merge(x,y):
-    z = x.copy()   
+
+def merge(x, y):
+    z = x.copy()
     z.update(y)
     return z
+
 
 env.globals.update(merge=merge)
 
@@ -23,6 +26,6 @@ env.globals.update(merge=merge)
 
 env.filters['merge'] = merge
 
-template = env.get_template( sys.argv[1] )
+template = env.get_template(sys.argv[1])
 
-print( template.render(data) )
+print(template.render(data))
