@@ -1,11 +1,11 @@
-FROM python:alpine3.7
+FROM python:3.8-alpine
 LABEL maintainer="Vitaly Uvarov <v.uvarov@dodopizza.com>"
 
-RUN    pip install --upgrade pip \
-    && pip install jinja2 pyyaml \
-    && mkdir /generator /data
+ADD pj.py requirements.txt entrypoint.sh /
 
-ADD pj.py entrypoint.sh /
+RUN    pip install --upgrade pip \
+    && pip --no-cache-dir install -r requirements.txt \
+    && mkdir /generator /data
 
 WORKDIR /data
 
